@@ -27,7 +27,7 @@ class App extends Component {
     return (
       <AppContainer>
         <GlobalStyle />
-        <Nav />
+        <Nav token={token} />
         {token ? <Profile /> : <Login />}
       </AppContainer>
     );

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components/macro";
-import { theme, mixins, Main } from "../styles";
+import { theme, mixins, Main, Button } from "../styles";
 const { colors, fontSizes } = theme;
 
 const LOGIN_URI =
@@ -27,20 +27,10 @@ const ButtonContainer = styled.div`
   display: contents;
 `;
 
-const LoginButton = styled.a`
-  display: inline-block;
+const LoginButton = styled(Button)`
   background-color: ${colors.green};
   color: ${colors.white};
-  border-radius: 30px;
-  padding: 17px 35px;
-  margin: 20px 0 70px;
-  min-width: 160px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  text-align: center;
-  &:hover,
-  &:focus {
+  &:hover {
     background-color: ${colors.offGreen};
   }
 `;
