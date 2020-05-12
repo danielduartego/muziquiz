@@ -1,19 +1,19 @@
 {
-  "name": "Musiquiz",
+  "name": "Muziquiz",
   "version": "0.1.0",
   "description": "Music Game",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/danielduartego/muziquiz.git"
   },
   "keywords": [],
   "author": "Daniel Duarte <danielduartego@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": ""
+    "url": "https://github.com/danielduartego/muziquiz.git"
   },
-  "homepage": "",
+  "homepage": "https://github.com/danielduartego",
   "engines": {
     "node": "12.16.2"
   },

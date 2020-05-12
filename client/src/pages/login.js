@@ -35,7 +35,7 @@ const LoginButton = styled(Button)`
   }
 `;
 
-export class Login extends Component {
+export class login extends Component {
   render() {
     return (
       <Container>
@@ -58,4 +58,4 @@ export class Login extends Component {
   }
 }
 
-export default Login;
+export default login;

@@ -1,10 +1,15 @@
 import React, { Component, Fragment } from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  NavLink,
+} from "react-router-dom";
 import styled from "styled-components/macro";
-
 import { getUserInfo } from "../spotify";
 import { catchErrors } from "../utils";
 import IconUser from "./icons/user.js";
-
 import { theme, mixins, Main, media, Button } from "../styles";
 const { colors, fontSizes, spacing } = theme;
 
@@ -66,7 +71,7 @@ const StartButton = styled(Button)`
   }
 `;
 
-export class Profile extends Component {
+export class Player extends Component {
   state = {
     user: null,
     points: 0,
@@ -85,30 +90,13 @@ export class Profile extends Component {
     const { user, points } = this.state;
     return (
       <Container>
-        {user ? (
-          <Fragment>
-            <Avatar>
-              {user.images.length > 0 ? (
-                <img src={user.images[0].url} alt="avatar" />
-              ) : (
-                <NoAvatar>
-                  <IconUser />
-                </NoAvatar>
-              )}
-            </Avatar>
-            <Name>{user.display_name}</Name>
-            <PointsContainer>
-              <h1>{points}</h1>
-              <h6>Points</h6>
-            </PointsContainer>
-            <StartButton href="/player">Let's Play</StartButton>
-          </Fragment>
-        ) : (
-          <p>loading...</p>
-        )}
+        <Fragment>
+          Here is the player
+          <StartButton href="/">profile</StartButton>
+        </Fragment>
       </Container>
     );
   }
 }
 
-export default Profile;
+export default Player;

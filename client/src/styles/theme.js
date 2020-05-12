@@ -50,9 +50,6 @@ const theme = {
   },
 
   transition: `all 0.25s cubic-bezier(0.3, 0, 0.4, 1);`,
-
-  navWidth: "100px",
-  navHeight: "70px",
 };
 
 export default theme;

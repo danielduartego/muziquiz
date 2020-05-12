@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Link } from "react-router-dom";
-import { logout } from "../spotify";
 
+import { logout } from "../spotify";
 import styled from "styled-components/macro";
 import LogoIcon from "./icons/logo.js";
 import { theme } from "../styles";
@@ -31,12 +31,11 @@ export class Nav extends Component {
     const { token } = this.props;
     return (
       <Navbar>
-        <Router>
-          <Link to="/">
-            <LogoIcon />
-          </Link>
-          {token ? <LogoutButton onClick={logout}>Logout</LogoutButton> : null}
-        </Router>
+        <Link exact to="/">
+          <LogoIcon />
+        </Link>
+
+        {token ? <LogoutButton onClick={logout}>Logout</LogoutButton> : null}
       </Navbar>
     );
   }

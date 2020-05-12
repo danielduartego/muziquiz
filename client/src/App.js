@@ -1,12 +1,13 @@
 import React, { Component } from "react";
+import { BrowserRouter as Router } from "react-router-dom";
 
 import styled from "styled-components/macro";
-import { GlobalStyle } from "../styles";
+import { GlobalStyle } from "./styles";
 
-import Nav from "./Nav";
-import Login from "./Login";
-import Profile from "./Profile";
-import { token } from "../spotify";
+import Nav from "./components/Nav";
+import Login from "./pages/login";
+import Home from "./pages/home";
+import { token } from "./spotify";
 
 const AppContainer = styled.div`
   height: 100%;
@@ -27,8 +28,10 @@ class App extends Component {
     return (
       <AppContainer>
         <GlobalStyle />
-        <Nav token={token} />
-        {token ? <Profile /> : <Login />}
+        <Router>
+          <Nav token={token} />
+          {token ? <Home /> : <Login />}
+        </Router>
       </AppContainer>
     );
   }
