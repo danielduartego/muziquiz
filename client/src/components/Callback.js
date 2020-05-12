@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from "react";
 import axios from "axios";
-import hash from "./hash";
 import Options from "./Options";
 import Countdown from "react-countdown";
 

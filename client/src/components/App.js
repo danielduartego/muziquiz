@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import styled from "styled-components/macro";
 import { GlobalStyle } from "../styles";
 
+import Nav from "./Nav";
 import Login from "./Login";
 import Profile from "./Profile";
 import { token } from "../spotify";
@@ -26,6 +27,7 @@ class App extends Component {
     return (
       <AppContainer>
         <GlobalStyle />
+        <Nav />
         {token ? <Profile /> : <Login />}
       </AppContainer>
     );
