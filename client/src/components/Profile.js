@@ -1,8 +1,6 @@
 import React, { Component, Fragment } from "react";
 import styled from "styled-components/macro";
 
-import { getUserInfo } from "../spotify";
-import { catchErrors } from "../utils";
 import IconUser from "./icons/user.js";
 
 import { theme, mixins, Main, media, Button } from "../styles";
@@ -10,6 +8,7 @@ const { colors, fontSizes, spacing } = theme;
 
 const Container = styled(Main)`
   ${mixins.flexCenter};
+  min-height: 80vh;
   flex-direction: column;
 `;
 
@@ -67,22 +66,8 @@ const StartButton = styled(Button)`
 `;
 
 export class Profile extends Component {
-  state = {
-    user: null,
-    points: 0,
-  };
-
-  componentDidMount() {
-    catchErrors(this.getData());
-  }
-
-  async getData() {
-    const { user } = await getUserInfo();
-    this.setState({ user });
-  }
-
   render() {
-    const { user, points } = this.state;
+    const { user, points } = this.props;
     return (
       <Container>
         {user ? (

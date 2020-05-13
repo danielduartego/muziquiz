@@ -1,26 +1,15 @@
-import React, { Component } from "react";
-import styled from "styled-components";
+import React, { Component, Fragment } from "react";
+import styled from "styled-components/macro";
+import { theme, mixins, Main, media, Button } from "../styles";
+const { colors, fontSizes } = theme;
 
-const Content = styled.div`
-  flex-direction: column;
-  width: 70%;
-  min-height: 60vh;
-  border: 1px solid #fff;
-`;
-const Button = styled.button`
-  font-size: 1rem;
-  cursor: pointer;
-  height: 5vh;
-  border: 0;
-  border-radius: 20px;
-  width: 85%;
-  color: #fff;
-  border: 1px solid #fff;
-  margin-top: 5%;
-  background-color: #000;
+const OptionButton = styled(Button)`
+  position: absolute;
+  border: 2px solid ${colors.white};
+  color: ${colors.white};
   &:hover {
-    background-color: #fff;
-    color: #000;
+    color: ${colors.black};
+    background-color: ${colors.white};
   }
 `;
 
@@ -33,15 +22,9 @@ export class Options extends Component {
     const optionSelected = event.target.value;
 
     if (optionSelected === this.props.played.track_id) {
-      this.setState({
-        showResult: true,
-        result: "🤩",
-      });
+      console.log("certo");
     } else {
-      this.setState({
-        showResult: true,
-        result: "😩",
-      });
+      console.log("errado");
     }
   };
 
@@ -50,28 +33,16 @@ export class Options extends Component {
 
     //Create buttons
     const buttons = options.map((option, index) => (
-      <Button
+      <OptionButton
         key={option.track_id}
         value={option.track_id}
         onClick={this.checkOption}
       >
         {option.track_name}
-      </Button>
+      </OptionButton>
     ));
 
-    const winMessage =
-      this.state.showResult === true ? (
-        <h1>{this.state.result}</h1>
-      ) : (
-        <h1>select an option</h1>
-      );
-
-    return (
-      <Content>
-        {winMessage}
-        {buttons}
-      </Content>
-    );
+    return <Fragment>{buttons}</Fragment>;
   }
 }
 

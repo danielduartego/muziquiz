@@ -1,28 +1,46 @@
 import React, { Component, Fragment } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
+
+import { getUserInfo } from "../spotify";
+import { catchErrors } from "../utils";
 
 import Profile from "../components/Profile";
 import Player from "../components/Player";
 
-import styled from "styled-components/macro";
-import { mixins, Main } from "../styles";
-
-const Container = styled(Main)`
-  ${mixins.flexCenter};
-  flex-direction: column;
-`;
-
 // Home page, here goes the profile and player components
 export class home extends Component {
+  state = {
+    user: null,
+    points: 0,
+  };
+
+  componentDidMount() {
+    catchErrors(this.getData());
+  }
+
+  async getData() {
+    const { user } = await getUserInfo();
+    this.setState({ user });
+  }
   render() {
+    const { user, points } = this.state;
     return (
       <Fragment>
-        <Container>
+        {user ? (
           <Switch>
-            <Route exact path="/" component={Profile} />
-            <Route path="/player" component={Player} />
+            <Route
+              exact
+              path="/"
+              component={(props) => <Profile user={user} points={points} />}
+            />
+            <Route
+              path="/player"
+              component={(props) => <Player user={user} points={points} />}
+            />
           </Switch>
-        </Container>
+        ) : (
+          <p>loading...</p>
+        )}
       </Fragment>
     );
   }

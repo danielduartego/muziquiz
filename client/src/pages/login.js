@@ -28,6 +28,7 @@ const ButtonContainer = styled.div`
 `;
 
 const LoginButton = styled(Button)`
+  width: 100%;
   background-color: ${colors.green};
   color: ${colors.white};
   &:hover {

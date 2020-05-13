@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { logout } from "../spotify";
 import styled from "styled-components/macro";
@@ -10,7 +10,7 @@ const { colors, fontSizes } = theme;
 const Navbar = styled.nav`
   display: flex;
   justify-content: space-between;
-  position: absolute;
+  // position: absolute;
   width: 100%;
   padding: 20px;
 `;
@@ -31,7 +31,7 @@ export class Nav extends Component {
     const { token } = this.props;
     return (
       <Navbar>
-        <Link exact to="/">
+        <Link to="/">
           <LogoIcon />
         </Link>
 
