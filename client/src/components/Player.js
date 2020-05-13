@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import LogoIcon from "./icons/logo.js";
+import ArrowUp from "./icons/arrowUp.js";
+import ArrowDown from "./icons/arrowDown.js";
 import Countdown from "react-countdown";
 import styled from "styled-components/macro";
 import { theme, mixins, Main, media, Button } from "../styles";
@@ -74,37 +76,49 @@ export class Player extends Component {
     option_1: "",
     option_2: "",
     option_3: "",
+    options: [],
     preview_url: "",
     cover_url: "",
     playing: false,
     showOptions: false,
+    showCountdown: false,
+    showPoints: false,
+    userPoints: null,
   };
 
   componentDidMount() {
+    const { points } = this.props;
+    this.setState({
+      userPoints: points,
+    });
     this.getData();
   }
+
   //Random get 3 tracks to compare
-  async getData() {
+  getData = async () => {
     const data = require("../data/json/tracks.json");
     // TODO: fix sometimes get same result
     let option_1 = data[Math.floor(Math.random() * data.length)];
     let option_2 = data[Math.floor(Math.random() * data.length)];
     let option_3 = data[Math.floor(Math.random() * data.length)];
+    let options = [option_1, option_2, option_3].sort(
+      () => Math.random() - 0.5
+    );
     await this.setState({
       played: option_1,
       option_1: option_1,
       option_2: option_2,
       option_3: option_3,
+      options: options,
       cover_url: option_1.cover_url,
       mp3Audio: new Audio(option_1.preview_url),
     });
-
     console.log("should play >>", option_1.track_name);
     this.playAudio();
-  }
+  };
 
   // Play the mp3Audio
-  playAudio() {
+  playAudio = () => {
     console.log("playing...");
     // this.state.mp3Audio.play();
     this.setState({
@@ -118,47 +132,88 @@ export class Player extends Component {
         this.setState({
           playing: false,
           showOptions: true,
+          showCountdown: true,
         });
       }.bind(this),
+      // TODO: change here for the desire time, 15s = 15000
       2000
     );
-  }
+  };
 
-  // Check option
+  // Check option selected
   checkOption = (event) => {
-    const optionSelected = event.target.id;
-
-    if (optionSelected === this.state.played.track_id) {
-      console.log("certo");
+    let idSelected = event.target.id;
+    if (idSelected === this.state.played.track_id) {
+      this.showAnswer(true);
     } else {
-      console.log("errado");
+      this.showAnswer(false);
     }
   };
 
-  render() {
-    const { user, points } = this.props;
-    const { option_1, option_2, option_3 } = this.state;
-    const options = [option_1, option_2, option_3];
-    //Shuffle options
-    options.sort(() => Math.random() - 0.5);
+  // Show the answer, true or false
+  showAnswer = (answer) => {
+    // Fisrt we stop the countdown
+    this.setState({
+      showCountdown: false,
+      showPoints: true,
+    });
 
+    // Wrong option, apply style to buttons
+    var elements = document.getElementsByClassName("optionButton");
+    for (var i = 0, len = elements.length; i < len; i++) {
+      elements[i].setAttribute(
+        "style",
+        "background-color:#EB1E32; border:1px solid #EB1E32; pointer-events:none;"
+      );
+    }
+
+    // Right option, apply style to buttons
+    document
+      .getElementById(this.state.played.track_id)
+      .setAttribute(
+        "style",
+        "background-color:#1DB954; border: 1px solid #1DB954; pointer-events:none;"
+      );
+
+    // This add the points to user
+    if (answer) {
+      this.setState({ userPoints: this.state.userPoints + 5 });
+    } else {
+      this.setState({ userPoints: this.state.userPoints - 2 });
+    }
+  };
+
+  // Display next option
+  getNextOption = () => {};
+
+  render() {
+    const { user } = this.props;
+    const {
+      userPoints,
+      showOptions,
+      showCountdown,
+      options,
+      playing,
+      showPoints,
+    } = this.state;
+
+    // Generate 3 buttons with options
     const buttons = options.map((option, index) => (
       <AnswerButton
         key={option.track_id}
         id={option.track_id}
         onClick={this.checkOption}
+        className="optionButton"
       >
         {option.track_name}
       </AnswerButton>
     ));
 
+    // Render the countdown time
     const renderer = ({ seconds, completed }) => {
       if (completed) {
         // Render a complete state
-
-        this.setState({
-          showOptions: false,
-        });
+        this.showAnswer(false);
         return null;
       } else {
         // Render a countdown
@@ -170,20 +225,21 @@ export class Player extends Component {
       <Container>
         <PointsContainer>
           <h1>{user.display_name}</h1>
-          <h2>{points}</h2>
+          <h2>{userPoints}</h2>
           <h6>Points</h6>
         </PointsContainer>
 
         <StatusContainer>
-          {this.state.playing ? <LogoIcon /> : null}
-          {this.state.showOptions ? (
-            <Countdown date={Date.now() + 7000} renderer={renderer} />
+          {playing ? <LogoIcon /> : null}
+          {showCountdown ? (
+            <Countdown date={Date.now() + 10000} renderer={renderer} />
           ) : null}
+          {showPoints ? <ArrowUp /> : null}
         </StatusContainer>
 
         <ActionContainer>
-          {this.state.playing ? <AnswerButton>Answer now</AnswerButton> : null}
-          {this.state.showOptions ? buttons : null}
+          {playing ? <AnswerButton>Answer now</AnswerButton> : null}
+          {showOptions ? buttons : null}
         </ActionContainer>
       </Container>
     );

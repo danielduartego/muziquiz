@@ -18,6 +18,7 @@ export class Options extends Component {
     showResult: false,
     result: "",
   };
+
   checkOption = (event) => {
     const optionSelected = event.target.value;
 
