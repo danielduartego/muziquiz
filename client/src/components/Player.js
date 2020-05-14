@@ -68,6 +68,36 @@ const AnswerButton = styled(Button)`
   }
 `;
 
+const Artwork = styled.div`
+  ${mixins.flexCenter};
+  margin-top: 30%;
+  text-align: center;
+  flex-direction: column;
+  border-radius: 100%;
+  img {
+    object-fit: cover;
+    border-radius: 100%;
+    width: 200px;
+    height: 200px;
+  }
+  h1 {
+    color: ${colors.white};
+    font-weight: 700;
+    margin: 0;
+    ${media.phablet`
+            font-size: 8vw;
+        `};
+  }
+  h6 {
+    color: ${colors.grey};
+    font-size: ${fontSizes.sm};
+    font-weight: 500;
+    ${media.phablet`
+            font-size: 6vw;
+        `};
+  }
+`;
+
 export class Player extends Component {
   // TODO: understand contructor
   constructor() {
@@ -82,13 +112,13 @@ export class Player extends Component {
       option_3: "",
       options: [],
       preview_url: "",
-      cover_url: "",
       playing: false,
       showOptions: false,
       showCountdown: false,
-      showNewPoints: false,
+      showArrows: false,
       showArroUp: Boolean,
       userPoints: null,
+      showCover: false,
     };
   }
 
@@ -116,7 +146,6 @@ export class Player extends Component {
       option_2: option_2,
       option_3: option_3,
       options: options,
-      cover_url: option_1.cover_url,
       mp3Audio: new Audio(option_1.preview_url),
     });
     console.log("should play >>", option_1.track_name);
@@ -129,6 +158,7 @@ export class Player extends Component {
     // this.state.mp3Audio.play();
     this.setState({
       playing: true,
+      showCover: false,
     });
     this.timer = setTimeout(
       function () {
@@ -172,7 +202,7 @@ export class Player extends Component {
     // Fisrt we stop the countdown and display the options
     this.setState({
       showCountdown: false,
-      showNewPoints: true,
+      showArrows: true,
     });
 
     // Wrong option, apply style to buttons
@@ -195,19 +225,42 @@ export class Player extends Component {
     // This add the points to user
     if (answer) {
       this.setState({
-        userPoints: this.state.userPoints + 5,
         showArroUp: true,
       });
     } else {
       this.setState({
-        userPoints: this.state.userPoints - 2,
         showArroUp: false,
       });
     }
+
+    // After 3 seconds show the Album Cover and option to go to next music
+    setTimeout(
+      function () {
+        this.showMusicCover(answer);
+      }.bind(this),
+      3000
+    );
   };
 
-  // Display next option
-  getNextOption = () => {};
+  // Display Music cover, next button option and assign the points
+  showMusicCover = (answer) => {
+    console.log("show cover");
+
+    this.setState({
+      showCover: true,
+      showOptions: false,
+      showArrows: false,
+    });
+    if (answer) {
+      this.setState({
+        userPoints: this.state.userPoints + 5,
+      });
+    } else {
+      this.setState({
+        userPoints: this.state.userPoints - 2,
+      });
+    }
+  };
 
   render() {
     const { user } = this.props;
@@ -217,8 +270,10 @@ export class Player extends Component {
       showCountdown,
       options,
       playing,
-      showNewPoints,
+      showArrows,
       showArroUp,
+      showCover,
+      played,
     } = this.state;
 
     // Generate 3 buttons with response options
@@ -265,7 +320,14 @@ export class Player extends Component {
           {showCountdown ? (
             <Countdown date={Date.now() + 10000} renderer={renderer} />
           ) : null}
-          {showNewPoints ? arrowPoints : null}
+          {showArrows ? arrowPoints : null}
+          {showCover ? (
+            <Artwork>
+              <img src={played.cover_url} />
+              <h1>{played.track_name}</h1>
+              <h6>{played.artist}</h6>
+            </Artwork>
+          ) : null}
         </StatusContainer>
 
         <ActionContainer>
@@ -273,6 +335,9 @@ export class Player extends Component {
             <AnswerButton onClick={this.answerNow}>Answer now</AnswerButton>
           ) : null}
           {showOptions ? buttons : null}
+          {showCover ? (
+            <AnswerButton onClick={this.getData}>Next Music</AnswerButton>
+          ) : null}
         </ActionContainer>
       </Container>
     );
