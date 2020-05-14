@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import LogoIcon from "./icons/logo.js";
-import ArrowUp from "./icons/arrowUp.js";
-import ArrowDown from "./icons/arrowDown.js";
+import ArrowUp from "../styles/ArrowUp";
+import ArrowDown from "../styles/ArrowDown";
 import Countdown from "react-countdown";
 import styled from "styled-components/macro";
 import { theme, mixins, Main, media, Button } from "../styles";
@@ -69,22 +69,28 @@ const AnswerButton = styled(Button)`
 `;
 
 export class Player extends Component {
-  state = {
-    name: "",
-    mp3Audio: "",
-    played: "",
-    option_1: "",
-    option_2: "",
-    option_3: "",
-    options: [],
-    preview_url: "",
-    cover_url: "",
-    playing: false,
-    showOptions: false,
-    showCountdown: false,
-    showPoints: false,
-    userPoints: null,
-  };
+  // TODO: understand contructor
+  constructor() {
+    super();
+    this.timer = null;
+    this.state = {
+      name: "",
+      mp3Audio: "",
+      played: "",
+      option_1: "",
+      option_2: "",
+      option_3: "",
+      options: [],
+      preview_url: "",
+      cover_url: "",
+      playing: false,
+      showOptions: false,
+      showCountdown: false,
+      showNewPoints: false,
+      showArroUp: Boolean,
+      userPoints: null,
+    };
+  }
 
   componentDidMount() {
     const { points } = this.props;
@@ -124,8 +130,7 @@ export class Player extends Component {
     this.setState({
       playing: true,
     });
-    // Stop after 15 seconds
-    setTimeout(
+    this.timer = setTimeout(
       function () {
         console.log("pause");
         this.state.mp3Audio.pause();
@@ -136,8 +141,20 @@ export class Player extends Component {
         });
       }.bind(this),
       // TODO: change here for the desire time, 15s = 15000
-      2000
+      5000
     );
+  };
+
+  // When click to answer now
+  answerNow = () => {
+    console.log("paused from answerNow");
+    this.state.mp3Audio.pause();
+    this.setState({
+      playing: false,
+      showOptions: true,
+      showCountdown: true,
+    });
+    clearTimeout(this.timer);
   };
 
   // Check option selected
@@ -152,10 +169,10 @@ export class Player extends Component {
 
   // Show the answer, true or false
   showAnswer = (answer) => {
-    // Fisrt we stop the countdown
+    // Fisrt we stop the countdown and display the options
     this.setState({
       showCountdown: false,
-      showPoints: true,
+      showNewPoints: true,
     });
 
     // Wrong option, apply style to buttons
@@ -167,7 +184,7 @@ export class Player extends Component {
       );
     }
 
-    // Right option, apply style to buttons
+    // Right option, apply style to the button
     document
       .getElementById(this.state.played.track_id)
       .setAttribute(
@@ -177,9 +194,15 @@ export class Player extends Component {
 
     // This add the points to user
     if (answer) {
-      this.setState({ userPoints: this.state.userPoints + 5 });
+      this.setState({
+        userPoints: this.state.userPoints + 5,
+        showArroUp: true,
+      });
     } else {
-      this.setState({ userPoints: this.state.userPoints - 2 });
+      this.setState({
+        userPoints: this.state.userPoints - 2,
+        showArroUp: false,
+      });
     }
   };
 
@@ -194,10 +217,11 @@ export class Player extends Component {
       showCountdown,
       options,
       playing,
-      showPoints,
+      showNewPoints,
+      showArroUp,
     } = this.state;
 
-    // Generate 3 buttons with options
+    // Generate 3 buttons with response options
     const buttons = options.map((option, index) => (
       <AnswerButton
         key={option.track_id}
@@ -221,6 +245,13 @@ export class Player extends Component {
       }
     };
 
+    // Generate the arrow up or down
+    const arrowPoints = showArroUp ? (
+      <ArrowUp points="5"></ArrowUp>
+    ) : (
+      <ArrowDown points="2"></ArrowDown>
+    );
+
     return (
       <Container>
         <PointsContainer>
@@ -234,11 +265,13 @@ export class Player extends Component {
           {showCountdown ? (
             <Countdown date={Date.now() + 10000} renderer={renderer} />
           ) : null}
-          {showPoints ? <ArrowUp /> : null}
+          {showNewPoints ? arrowPoints : null}
         </StatusContainer>
 
         <ActionContainer>
-          {playing ? <AnswerButton>Answer now</AnswerButton> : null}
+          {playing ? (
+            <AnswerButton onClick={this.answerNow}>Answer now</AnswerButton>
+          ) : null}
           {showOptions ? buttons : null}
         </ActionContainer>
       </Container>
