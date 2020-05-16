@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import LogoIcon from "./icons/logo.js";
+import Loading from "./icons/loading.js";
 import ArrowUp from "../styles/ArrowUp";
 import ArrowDown from "../styles/ArrowDown";
 import Countdown from "react-countdown";
@@ -11,11 +12,9 @@ const Container = styled(Main)`
   ${mixins.flexCenter};
   min-height: 100%;
   flex-direction: column;
-  // border: 1px solid #fff;
 `;
 
 const PointsContainer = styled.div`
-  // width: 100%;
   h1 {
     margin-bottom: auto;
     font-size: ${fontSizes.lg};
@@ -45,15 +44,12 @@ const PointsContainer = styled.div`
 
 const StatusContainer = styled.div`
   ${mixins.flexCenter};
-  // border: 1px solid #fff;
   height: 300px;
-  width: 300px;
 `;
 
 const ActionContainer = styled.div`
   ${mixins.flexCenter};
   flex-direction: column;
-  // border: 1px solid #fff;
   height: 400px;
   width: 400px;
 `;
@@ -77,8 +73,8 @@ const Artwork = styled.div`
   img {
     object-fit: cover;
     border-radius: 100%;
-    width: 200px;
-    height: 200px;
+    width: 250px;
+    height: 250px;
   }
   h1 {
     color: ${colors.white};
@@ -160,19 +156,19 @@ export class Player extends Component {
       playing: true,
       showCover: false,
     });
-    this.timer = setTimeout(
-      function () {
-        console.log("pause");
-        this.state.mp3Audio.pause();
-        this.setState({
-          playing: false,
-          showOptions: true,
-          showCountdown: true,
-        });
-      }.bind(this),
-      // TODO: change here for the desire time, 15s = 15000
-      5000
-    );
+    // this.timer = setTimeout(
+    //     function () {
+    //         console.log('pause');
+    //         this.state.mp3Audio.pause();
+    //         this.setState({
+    //             playing: false,
+    //             showOptions: true,
+    //             showCountdown: true,
+    //         });
+    //     }.bind(this),
+    //     // TODO: change here for the desire time, 15s = 15000
+    //     5000
+    // );
   };
 
   // When click to answer now

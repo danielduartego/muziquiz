@@ -1,20 +1,19 @@
 import React, { Component, Fragment } from "react";
 import styled from "styled-components/macro";
-
 import IconUser from "./icons/user.js";
+import Loading from "./icons/loading.js";
 
 import { theme, mixins, Main, media, Button } from "../styles";
 const { colors, fontSizes, spacing } = theme;
 
 const Container = styled(Main)`
   ${mixins.flexCenter};
-  min-height: 80vh;
   flex-direction: column;
 `;
 
 const Avatar = styled.div`
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
   img {
     border-radius: 50%;
     min-width: 100%;
@@ -51,7 +50,7 @@ const PointsContainer = styled.div`
   h6 {
     font-weight: 400;
     color: ${colors.grey};
-    font-size: ${fontSizes.lg};
+    font-size: ${fontSizes.md};
     text-transform: uppercase;
   }
 `;
@@ -89,7 +88,7 @@ export class Profile extends Component {
             <StartButton href="/player">Let's Play</StartButton>
           </Fragment>
         ) : (
-          <p>loading...</p>
+          <Loading />
         )}
       </Container>
     );

@@ -12,8 +12,8 @@ const Button = styled.a`
   letter-spacing: 2px;
   text-transform: uppercase;
   text-align: center;
-  width: 380px;
   font-size: ${fontSizes.sm};
+  width: 380px;
   ${media.phablet`
         width: 300px;
     `};

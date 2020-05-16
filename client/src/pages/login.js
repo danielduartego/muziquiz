@@ -11,7 +11,6 @@ const LOGIN_URI =
 const Container = styled(Main)`
   ${mixins.flexLeft};
   flex-direction: column;
-  min-height: 100vh;
   h1 {
     font-size: ${fontSizes.xxl};
     margin: -5px 0;

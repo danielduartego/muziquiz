@@ -10,15 +10,16 @@ const { colors, fontSizes } = theme;
 const Navbar = styled.nav`
   display: flex;
   justify-content: space-between;
-  // position: absolute;
   width: 100%;
   padding: 20px;
+  height: 90px;
 `;
 
 const LogoutButton = styled.button`
   background-color: ${colors.black};
   text-transform: uppercase;
   color: ${colors.grey};
+  padding: 0;
   font-weight: 400;
   font-size: ${fontSizes.sm};
   &:hover {
