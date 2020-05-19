@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import LogoIcon from "./icons/logo.js";
-import Loading from "./icons/loading.js";
+import MusicWave from "./icons/musicWave.js";
 import ArrowUp from "../styles/ArrowUp";
 import ArrowDown from "../styles/ArrowDown";
 import Countdown from "react-countdown";
@@ -52,6 +52,15 @@ const ActionContainer = styled.div`
   flex-direction: column;
   height: 400px;
   width: 400px;
+`;
+
+const PlayingContainer = styled.div`
+  ${mixins.flexCenter};
+  flex-direction: column;
+  border: 2px solid ${colors.green};
+  border-radius: 100%;
+  width: 250px;
+  height: 250px;
 `;
 
 const AnswerButton = styled(Button)`
@@ -312,7 +321,11 @@ export class Player extends Component {
         </PointsContainer>
 
         <StatusContainer>
-          {playing ? <LogoIcon /> : null}
+          {playing ? (
+            <PlayingContainer>
+              <MusicWave />
+            </PlayingContainer>
+          ) : null}
           {showCountdown ? (
             <Countdown date={Date.now() + 10000} renderer={renderer} />
           ) : null}
