@@ -189,7 +189,6 @@ export class Player extends Component {
           showCountdown: true,
         });
       }.bind(this),
-      // TODO: change here for the desire time, 15s = 15000
       15000
     );
   };
@@ -354,7 +353,7 @@ export class Player extends Component {
           {showArrows ? arrowPoints : null}
           {showCover ? (
             <Artwork>
-              <img src={played.cover_url} />
+              <img src={played.cover_url} alt="Cover" />
               <h1>{played.track_name}</h1>
               <h6>{played.artist}</h6>
             </Artwork>

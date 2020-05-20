@@ -7,7 +7,6 @@ import styled from "styled-components/macro";
 import { mixins, Main } from "../styles";
 import Profile from "../components/Profile";
 import Player from "../components/Player";
-import ParseData from "../components/ParseData";
 
 const Container = styled(Main)`
   ${mixins.flexCenter};
