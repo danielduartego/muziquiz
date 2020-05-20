@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import ArrowDown from "../components/icons/arrowDown.js";
 import styled from "styled-components/macro";
 import { theme, mixins } from ".";

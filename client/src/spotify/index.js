@@ -2,7 +2,7 @@ import axios from "axios";
 import { getHashParams } from "../utils";
 
 // TOKENS ******************************************************************************************
-const EXPIRATION_TIME = 3600 * 1000; // 3600 seconds * 1000 = 1 hour in milliseconds
+const EXPIRATION_TIME = 3600 * 24000; // 3600 seconds * 1000 = 1 hour in milliseconds
 
 const setTokenTimestamp = () =>
   window.localStorage.setItem("spotify_token_timestamp", Date.now());

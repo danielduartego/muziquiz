@@ -11,7 +11,7 @@ const IconMusicWave = () => (
       <linearGradient id="left-to-right">
         <stop offset="0" stopColor="#1DB954">
           <animate
-            dur="5s"
+            dur="15s"
             attributeName="offset"
             fill="freeze"
             from="0"
@@ -20,7 +20,7 @@ const IconMusicWave = () => (
         </stop>
         <stop offset="0" stopColor="#282828">
           <animate
-            dur="5s"
+            dur="15s"
             attributeName="offset"
             fill="freeze"
             from="0"

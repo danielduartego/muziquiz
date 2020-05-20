@@ -1,11 +1,10 @@
 import React, { Component } from "react";
-import LogoIcon from "./icons/logo.js";
 import MusicWave from "./icons/musicWave.js";
 import ArrowUp from "../styles/ArrowUp";
 import ArrowDown from "../styles/ArrowDown";
 import Countdown from "react-countdown";
 import styled from "styled-components/macro";
-import { theme, mixins, Main, media, Button } from "../styles";
+import { theme, mixins, Main, media, Button, CircleContainer } from "../styles";
 const { colors, fontSizes } = theme;
 
 const Container = styled(Main)`
@@ -63,8 +62,23 @@ const PlayingContainer = styled.div`
   height: 250px;
 `;
 
+const CountContainer = styled.div`
+  ${mixins.flexCenter};
+  flex-direction: column;
+  border: 2px solid ${colors.red};
+  border-radius: 100%;
+  width: 250px;
+  height: 250px;
+  h1 {
+    color: ${colors.red};
+    font-size: ${fontSizes.gt};
+    font-weight: 700;
+  }
+`;
+
 const AnswerButton = styled(Button)`
   bottom: 0;
+  margin: 10px 0;
   border: 2px solid ${colors.white};
   color: ${colors.white};
   &:hover {
@@ -160,24 +174,24 @@ export class Player extends Component {
   // Play the mp3Audio
   playAudio = () => {
     console.log("playing...");
-    // this.state.mp3Audio.play();
+    this.state.mp3Audio.play();
     this.setState({
       playing: true,
       showCover: false,
     });
-    // this.timer = setTimeout(
-    //     function () {
-    //         console.log('pause');
-    //         this.state.mp3Audio.pause();
-    //         this.setState({
-    //             playing: false,
-    //             showOptions: true,
-    //             showCountdown: true,
-    //         });
-    //     }.bind(this),
-    //     // TODO: change here for the desire time, 15s = 15000
-    //     5000
-    // );
+    this.timer = setTimeout(
+      function () {
+        console.log("pause");
+        this.state.mp3Audio.pause();
+        this.setState({
+          playing: false,
+          showOptions: true,
+          showCountdown: true,
+        });
+      }.bind(this),
+      // TODO: change here for the desire time, 15s = 15000
+      15000
+    );
   };
 
   // When click to answer now
@@ -238,12 +252,12 @@ export class Player extends Component {
       });
     }
 
-    // After 3 seconds show the Album Cover and option to go to next music
+    // After 2 seconds show the Album Cover and option to go to next music
     setTimeout(
       function () {
         this.showMusicCover(answer);
       }.bind(this),
-      3000
+      2000
     );
   };
 
@@ -301,15 +315,23 @@ export class Player extends Component {
         return null;
       } else {
         // Render a countdown
-        return <h1>{seconds}</h1>;
+        return (
+          <CountContainer>
+            <h1>{seconds}</h1>
+          </CountContainer>
+        );
       }
     };
 
     // Generate the arrow up or down
     const arrowPoints = showArroUp ? (
-      <ArrowUp points="5"></ArrowUp>
+      <CircleContainer color={`${colors.green}`}>
+        <ArrowUp points="5"></ArrowUp>
+      </CircleContainer>
     ) : (
-      <ArrowDown points="2"></ArrowDown>
+      <CircleContainer color={`${colors.red}`}>
+        <ArrowDown points="2"></ArrowDown>
+      </CircleContainer>
     );
 
     return (

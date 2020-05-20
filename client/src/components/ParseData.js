@@ -13,7 +13,7 @@ export class ParseData extends Component {
   componentDidMount() {
     // Get the data from csv
     // TODO: add url link to get from spotify chart https://spotifycharts.com/regional/global/daily/latest
-    var csvFilePath = require("../data/csv/regional-global-daily-latest.csv");
+    var csvFilePath = require("../data/csv/regional-global-daily.csv");
 
     Papa.parse(csvFilePath, {
       header: false,
@@ -33,6 +33,15 @@ export class ParseData extends Component {
 
     for (let i = 0; i < data.length; i++) {
       if (i > 1) {
+        // Reset the array
+        jsonData[i] = {
+          track_name: "",
+          artist: "",
+          track_id: "",
+          preview_url: "",
+          cover_url: "",
+        };
+
         if (data[i][4] !== undefined) {
           track_id = data[i][4].split("/")[4];
         } else {
@@ -41,7 +50,7 @@ export class ParseData extends Component {
 
         const headers = {
           headers: {
-            Authorization: "Bearer " + localStorage.token,
+            Authorization: "Bearer " + localStorage.spotify_access_token,
           },
         };
         await axios

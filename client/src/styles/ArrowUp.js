@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import ArrowUp from "../components/icons/arrowUp.js";
 import styled from "styled-components/macro";
 import { theme, mixins } from "../styles";

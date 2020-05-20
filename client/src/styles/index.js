@@ -4,5 +4,6 @@ import Main from "./Main";
 import mixins from "./mixins";
 import media from "./media";
 import Button from "./Button";
+import CircleContainer from "./CircleContainer";
 
-export { GlobalStyle, theme, mixins, Main, media, Button };
+export { GlobalStyle, theme, mixins, Main, media, Button, CircleContainer };
