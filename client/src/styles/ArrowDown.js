@@ -13,10 +13,19 @@ const Number = styled.h1`
   font-size: ${fontSizes.xxl};
   transition: ${theme.transition};
 `;
+const Points = styled.h6`
+  position: absolute;
+  margin-top: 35px;
+  font-weight: 400;
+  color: ${colors.grey};
+  font-size: ${fontSizes.sm};
+  text-transform: uppercase;
+`;
 
 export default ({ points }) => (
   <Container>
     <ArrowDown />
     <Number>{points}</Number>
+    <Points>Points</Points>
   </Container>
 );
