@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import { Switch, Route } from "react-router-dom";
 import Loading from "../components/icons/loading.js";
 import { getUserInfo } from "../spotify";
+import { getDataTracks } from "../data";
 import { catchErrors } from "../utils";
 import styled from "styled-components/macro";
 import { mixins, Main } from "../styles";
@@ -16,6 +17,7 @@ const Container = styled(Main)`
 // Home page, here goes the profile and player components
 export class home extends Component {
   state = {
+    dataTracks: [],
     user: null,
     points: 0,
   };
@@ -26,10 +28,11 @@ export class home extends Component {
 
   async getData() {
     const { user } = await getUserInfo();
-    this.setState({ user });
+    const dataTracks = await getDataTracks();
+    this.setState({ user, dataTracks });
   }
   render() {
-    const { user, points } = this.state;
+    const { dataTracks, user, points } = this.state;
     return (
       <Fragment>
         {user ? (
@@ -41,7 +44,9 @@ export class home extends Component {
             />
             <Route
               path="/player"
-              component={(props) => <Player user={user} points={points} />}
+              component={(props) => (
+                <Player user={user} points={points} dataTracks={dataTracks} />
+              )}
             />
           </Switch>
         ) : (

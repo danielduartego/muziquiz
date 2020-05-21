@@ -118,7 +118,7 @@ const Artwork = styled.div`
 `;
 
 export class Player extends Component {
-  // TODO: understand contructor
+  // TODO: understand better contructor
   constructor() {
     super();
     this.timer = null;
@@ -151,7 +151,7 @@ export class Player extends Component {
 
   //Random get 3 tracks to compare
   getData = async () => {
-    const data = require("../data/json/tracks.json");
+    const data = this.props.dataTracks;
     // TODO: fix sometimes get same result
     let option_1 = data[Math.floor(Math.random() * data.length)];
     let option_2 = data[Math.floor(Math.random() * data.length)];
