@@ -6,7 +6,7 @@ const { colors, fontSizes } = theme;
 const LOGIN_URI =
   process.env.NODE_ENV !== "production"
     ? "http://localhost:8888/login"
-    : "https://muziquiz.co/login";
+    : "https://muziquiz-app.firebaseapp.com/login";
 
 const Container = styled(Main)`
   ${mixins.flexLeft};
