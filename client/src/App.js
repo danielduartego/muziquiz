@@ -1,13 +1,14 @@
-import React, { Component } from "react";
+import React, { Component, useContext } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
+import firebase from "firebase";
+
+import { UserContext } from "./contexts/userContext";
+import Home from "../src/pages/home";
+import Login from "../src/pages/login";
+import Nav from "../src/components/Nav";
 
 import styled from "styled-components/macro";
-import { GlobalStyle } from "./styles";
-
-import Nav from "./components/Nav";
-import Login from "./pages/login";
-import Home from "./pages/home";
-import { token } from "./spotify";
+import { GlobalStyle } from "../src/styles";
 
 const AppContainer = styled.div`
   height: 100%;
@@ -15,22 +16,31 @@ const AppContainer = styled.div`
 `;
 
 class App extends Component {
-  state = {
-    token: "",
-  };
+  static contextType = UserContext;
 
-  componentDidMount() {
-    this.setState({ token });
-  }
+  // componentWillMount = () => {
+  //     firebase.auth().onAuthStateChanged((user) => {
+  //         const { updateUser, isSignedIn } = this.context;
+  //         console.log('inside did mount 1', isSignedIn);
+  //         console.log('current user ', firebase.auth().currentUser);
+  //         if (user && !isSignedIn) {
+  //             console.log('inside did mount 2', isSignedIn);
+  //             // updateUser(user);
+  //         }
+  //         console.log(user);
+  //     });
+  // };
 
   render() {
-    const { token } = this.state;
+    const { isSignedIn } = this.context;
+    console.log("from app", firebase.auth().currentUser);
+
     return (
       <AppContainer>
         <GlobalStyle />
         <Router>
-          <Nav token={token} />
-          {token ? <Home /> : <Login />}
+          <Nav />
+          {firebase.auth().currentUser ? <Home /> : <Login />}
         </Router>
       </AppContainer>
     );

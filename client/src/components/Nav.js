@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-
-import { logout } from "../spotify";
+import { UserContext } from "../contexts/userContext";
 import styled from "styled-components/macro";
 import LogoIcon from "./icons/logo.js";
 import { theme } from "../styles";
@@ -28,15 +27,17 @@ const LogoutButton = styled.button`
 `;
 
 export class Nav extends Component {
+  static contextType = UserContext;
   render() {
-    const { token } = this.props;
+    const { signOut, isSignedIn } = this.context;
     return (
       <Navbar>
         <Link to="/">
           <LogoIcon />
         </Link>
-
-        {token ? <LogoutButton onClick={logout}>Logout</LogoutButton> : null}
+        {isSignedIn ? (
+          <LogoutButton onClick={() => signOut()}>Logout</LogoutButton>
+        ) : null}
       </Navbar>
     );
   }

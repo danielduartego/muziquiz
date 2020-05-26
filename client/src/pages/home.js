@@ -1,13 +1,15 @@
 import React, { Component, Fragment } from "react";
 import { Switch, Route } from "react-router-dom";
 import Loading from "../components/icons/loading.js";
-import { getUserInfo } from "../spotify";
-import { getDataTracks } from "../data";
-import { catchErrors } from "../utils";
-import styled from "styled-components/macro";
-import { mixins, Main } from "../styles";
+
+import { UserContext } from "../contexts/userContext";
 import Profile from "../components/Profile";
 import Player from "../components/Player";
+
+import { getDataTracks } from "../data";
+
+import styled from "styled-components/macro";
+import { mixins, Main } from "../styles";
 
 const Container = styled(Main)`
   ${mixins.flexCenter};
@@ -16,37 +18,30 @@ const Container = styled(Main)`
 
 // Home page, here goes the profile and player components
 export class home extends Component {
+  static contextType = UserContext;
   state = {
     dataTracks: [],
-    user: null,
-    points: 0,
   };
 
   componentDidMount() {
-    catchErrors(this.getData());
+    this.getData();
   }
 
   async getData() {
-    const { user } = await getUserInfo();
     const dataTracks = await getDataTracks();
-    this.setState({ user, dataTracks });
+    this.setState({ dataTracks });
   }
   render() {
-    const { dataTracks, user, points } = this.state;
+    const { dataTracks } = this.state;
+    const { user } = this.context;
     return (
       <Fragment>
         {user ? (
           <Switch>
-            <Route
-              exact
-              path="/"
-              component={(props) => <Profile user={user} points={points} />}
-            />
+            <Route exact path="/" component={Profile} />
             <Route
               path="/player"
-              component={(props) => (
-                <Player user={user} points={points} dataTracks={dataTracks} />
-              )}
+              component={(props) => <Player dataTracks={dataTracks} />}
             />
           </Switch>
         ) : (

@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import firebase from "firebase";
+import { UserContext } from "../contexts/userContext";
 import MusicWave from "./icons/musicWave.js";
 import ArrowUp from "../styles/ArrowUp";
 import ArrowDown from "../styles/ArrowDown";
@@ -118,6 +120,7 @@ const Artwork = styled.div`
 `;
 
 export class Player extends Component {
+  static contextType = UserContext;
   // TODO: understand better contructor
   constructor() {
     super();
@@ -142,7 +145,7 @@ export class Player extends Component {
   }
 
   componentDidMount() {
-    const { points } = this.props;
+    const { points } = this.context;
     this.setState({
       userPoints: points,
     });
@@ -282,7 +285,7 @@ export class Player extends Component {
   };
 
   render() {
-    const { user } = this.props;
+    const { user, points } = this.context;
     const {
       userPoints,
       showOptions,
@@ -337,8 +340,8 @@ export class Player extends Component {
     return (
       <Container>
         <PointsContainer>
-          <h1>{user.display_name}</h1>
-          <h2>{userPoints}</h2>
+          <h1>{user.userName}</h1>
+          <h2>{points}</h2>
           <h6>Points</h6>
         </PointsContainer>
 

@@ -173,11 +173,54 @@ const GlobalStyle = createGlobalStyle`
     cursor: pointer;
     transition: ${theme.transition};
 
-    &:hover,
-    &:focus {
+    &:hover {
       color: ${colors.white};
       outline: 0;
     }
+  }
+
+  #firebaseui_container{
+    .firebaseui-container.firebaseui-page-provider-sign-in.firebaseui-id-page-provider-sign-in.firebaseui-use-spinner{
+      margin: 0;
+      padding: 0;
+      max-width: 100%;
+      .firebaseui-card-content{
+        padding: 0;
+        width: 100%;
+        button{
+          min-width: 100%;
+          border-radius: 50px;
+        }
+      }
+    }
+  }
+  .firebaseui-container.firebaseui-page-provider-sign-in {
+    background: transparent;
+    box-shadow: none;
+    min-height: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+  }
+  
+  .firebaseui-card-header {
+    display: block;
+  }
+  .firebaseui-subtitle, .firebaseui-text {
+    color: rgba(255, 255, 255, 0.87);
+  }
+  .firebaseui-form-actions .mdl-button--raised.mdl-button--colored.firebaseui-button {
+    background: rgba(0, 0, 0, 0.1);
+  }
+  .firebaseui-id-dismiss-info-bar {
+    display: none;
+  }
+  .firebaseui-info-bar {
+    border: 0;
+    border-radius: 10px;
+    left: 5%;
+    right: 5%;
+    top: 10%;
+    bottom: 10%;
   }
 `;
 
