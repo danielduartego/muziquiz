@@ -1,14 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import UserContextProvider from "./contexts/userContext";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
   <React.StrictMode>
-    <UserContextProvider>
-      <App />
-    </UserContextProvider>
+    <App />
   </React.StrictMode>,
   document.getElementById("root")
 );

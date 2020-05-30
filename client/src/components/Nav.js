@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { UserContext } from "../contexts/userContext";
+import { userContext, signOut } from "../utils/auth";
 import styled from "styled-components/macro";
 import LogoIcon from "./icons/logo.js";
 import { theme } from "../styles";
@@ -27,15 +27,15 @@ const LogoutButton = styled.button`
 `;
 
 export class Nav extends Component {
-  static contextType = UserContext;
+  static contextType = userContext;
   render() {
-    const { signOut, isSignedIn } = this.context;
+    const { user } = this.context;
     return (
       <Navbar>
         <Link to="/">
           <LogoIcon />
         </Link>
-        {isSignedIn ? (
+        {user ? (
           <LogoutButton onClick={() => signOut()}>Logout</LogoutButton>
         ) : null}
       </Navbar>

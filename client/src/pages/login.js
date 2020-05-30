@@ -2,11 +2,10 @@ import React, { Component, useContext } from "react";
 import styled from "styled-components/macro";
 import firebase from "firebase";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
-import { UserContext } from "../contexts/userContext";
+import { userContext } from "../utils/auth";
 import Loading from "../components/icons/loading";
 import { theme, mixins, Main, Button } from "../styles";
 const { colors, fontSizes } = theme;
-require("dotenv").config();
 
 // Components
 const Container = styled(Main)`
@@ -45,27 +44,15 @@ firebase.initializeApp({
 });
 
 export class login extends Component {
-  static contextType = UserContext;
+  static contextType = userContext;
 
   uiConfig = {
-    signInFlow: "redirect",
+    signInFlow: "popup",
     signInOptions: [
       firebase.auth.GoogleAuthProvider.PROVIDER_ID,
       firebase.auth.FacebookAuthProvider.PROVIDER_ID,
       firebase.auth.EmailAuthProvider.PROVIDER_ID,
     ],
-  };
-
-  componentWillMount = () => {
-    firebase.auth().onAuthStateChanged((user) => {
-      const { updateUser, isSignedIn } = this.context;
-      console.log("inside did mount 1", isSignedIn);
-      console.log("current user ", firebase.auth().currentUser);
-      if (!firebase.auth().currentUser) {
-        console.log("inside did mount 2", isSignedIn);
-        updateUser(user);
-      }
-    });
   };
 
   render() {

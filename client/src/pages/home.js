@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import { Switch, Route } from "react-router-dom";
 import Loading from "../components/icons/loading.js";
 
-import { UserContext } from "../contexts/userContext";
+import { userContext } from "../utils/auth";
 import Profile from "../components/Profile";
 import Player from "../components/Player";
 
@@ -18,13 +18,13 @@ const Container = styled(Main)`
 
 // Home page, here goes the profile and player components
 export class home extends Component {
-  static contextType = UserContext;
+  static contextType = userContext;
   state = {
     dataTracks: [],
   };
 
   componentDidMount() {
-    this.getData();
+    // this.getData();
   }
 
   async getData() {
