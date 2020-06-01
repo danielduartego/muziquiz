@@ -19,8 +19,8 @@ export const useAuth = () => {
     return { user };
   });
   const onChange = async (user) => {
-    const userPoints = getPoints(user.uid);
-    console.log(userPoints);
+    // const userPoints = getPoints(user.uid);
+    // console.log(userPoints);
     setState({ loading: false, points: 0, user });
   };
 
