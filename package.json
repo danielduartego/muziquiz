@@ -15,7 +15,7 @@
   },
   "homepage": "https://github.com/danielduartego",
   "engines": {
-    "node": "12.16.2"
+    "node": "10.20.1"
   },
   "scripts": {
     "client:install": "cd client && yarn",

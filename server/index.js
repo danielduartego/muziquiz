@@ -80,7 +80,7 @@ if (cluster.isMaster) {
     .use(express.static(path.resolve(__dirname, "../client/build")));
 
   app.get("/", function (req, res) {
-    res.render(path.resolve(__dirname, "../client/build/index.html"));
+    res.redirect("https://muziquiz-app.web.app/");
   });
 
   app.get("/login", function (req, res) {
@@ -175,11 +175,9 @@ if (cluster.isMaster) {
     });
   });
 
-  // All remaining requests return the React app, so it can handle routing.
-  app.get("*", function (request, response) {
-    response.sendFile(
-      path.resolve(__dirname, "../client/public", "index.html")
-    );
+  // All remaining requests redirect the React app, so it can handle routing.
+  app.get("*", function (req, res) {
+    res.redirect("https://muziquiz-app.web.app/");
   });
 
   app.listen(PORT, function () {
