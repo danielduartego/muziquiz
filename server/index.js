@@ -79,9 +79,7 @@ if (cluster.isMaster) {
     )
     .use(express.static(path.resolve(__dirname, "../client/build")));
 
-  app.get("/", function (req, res) {
-    res.redirect("https://muziquiz-app.web.app/");
-  });
+  app.get("/", (req, res) => res.redirect("https://muziquiz-app.web.app/"));
 
   app.get("/login", function (req, res) {
     const state = generateRandomString(16);
@@ -176,9 +174,7 @@ if (cluster.isMaster) {
   });
 
   // All remaining requests redirect the React app, so it can handle routing.
-  app.get("*", function (req, res) {
-    res.redirect("https://muziquiz-app.web.app/");
-  });
+  app.get("*", (req, res) => res.redirect("https://muziquiz-app.web.app/"));
 
   app.listen(PORT, function () {
     console.warn(
