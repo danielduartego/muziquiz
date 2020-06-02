@@ -4,8 +4,7 @@ import axios from "axios";
 
 export const userContext = createContext({
   user: null,
-  points: null,
-  loading: null,
+  loading: false,
 });
 
 export const useSession = () => {
@@ -15,16 +14,28 @@ export const useSession = () => {
 
 export const useAuth = () => {
   const [state, setState] = useState(() => {
+    console.log("useState");
+
     const user = firebase.auth().currentUser;
     return { user };
   });
-  const onChange = async (user) => {
-    // const userPoints = getPoints(user.uid);
-    // console.log(userPoints);
-    setState({ loading: false, points: 0, user });
+
+  const onChange = (user) => {
+    console.log("onChange");
+    if (user) {
+      axios
+        .get(
+          `https://us-central1-muziquiz-app.cloudfunctions.net/api/users/${user.uid}`
+        )
+        .then((res) => {
+          setState({ user: res.data });
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
   useEffect(() => {
+    console.log("useEffect");
     // listen for auth state changes
     const unsubscribe = firebase.auth().onAuthStateChanged(onChange);
     // unsubscribe to the listener when unmounting
@@ -36,18 +47,5 @@ export const useAuth = () => {
 
 export const signOut = () => {
   firebase.auth().signOut();
-  // window.location = window.location.origin;
-};
-
-const getPoints = (userId) => {
-  axios
-    .get(
-      `https://us-central1-muziquiz-app.cloudfunctions.net/api/points/${userId}`
-    )
-    .then((res) => {
-      console.log(res.data.points);
-
-      return res.data.points;
-    })
-    .catch((err) => console.log(err));
+  window.location = window.location.origin;
 };

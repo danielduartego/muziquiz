@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import { Switch, Route } from "react-router-dom";
 import Loading from "../components/icons/loading.js";
 
-import { userContext } from "../utils/auth";
+import { userContext } from "../hooks/auth";
 import Profile from "../components/Profile";
 import Player from "../components/Player";
 

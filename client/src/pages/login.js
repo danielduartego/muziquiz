@@ -1,8 +1,8 @@
-import React, { Component, useContext } from "react";
+import React, { Component, useContext, useEffect } from "react";
 import styled from "styled-components/macro";
 import firebase from "firebase";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
-import { userContext } from "../utils/auth";
+import { userContext } from "../hooks/auth";
 import Loading from "../components/icons/loading";
 import { theme, mixins, Main, Button } from "../styles";
 const { colors, fontSizes } = theme;
@@ -46,6 +46,10 @@ firebase.initializeApp({
 export class login extends Component {
   static contextType = userContext;
 
+  state = {
+    loading: false,
+  };
+
   uiConfig = {
     signInFlow: "popup",
     signInOptions: [
@@ -55,8 +59,73 @@ export class login extends Component {
     ],
   };
 
+  loginWithFacebook = () => {
+    this.setState({ loading: true });
+    let facebookProvider = new firebase.auth.FacebookAuthProvider();
+
+    firebase
+      .auth()
+      .signInWithPopup(facebookProvider)
+      .then(function (result) {
+        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+        let token = result.credential.accessToken;
+        // The signed-in user info.
+        let user = result.user;
+        // ...
+        console.log(token, user);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+  loginWithGoogle = () => {
+    this.setState({ loading: true });
+    let googleProvider = new firebase.auth.GoogleAuthProvider();
+    firebase
+      .auth()
+      .signInWithPopup(googleProvider)
+      .then(function (result) {
+        console.log(result);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+  createUser = () => {
+    this.setState({ loading: true });
+    const email = "dan@user.com";
+    const password = "123456";
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(function (user) {
+        window.location = window.location.origin;
+      })
+      .catch(function (error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+      });
+  };
+  signInUser = () => {
+    this.setState({ loading: true });
+    const email = "joeh@doe.com";
+    const password = "123456";
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .catch(function (error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+      });
+  };
+
   render() {
-    const { loading } = this.context;
+    const { loading } = this.state;
+
     return (
       <Container>
         {loading ? (
@@ -75,6 +144,13 @@ export class login extends Component {
               uiConfig={this.uiConfig}
               firebaseAuth={firebase.auth()}
             />
+
+            <button onClick={this.loginWithFacebook}>
+              Login with facebook
+            </button>
+            <button onClick={this.loginWithGoogle}>Login with google</button>
+            <button onClick={this.createUser}>create user</button>
+            <button onClick={this.signInUser}>sign in user john doe</button>
           </div>
         )}
       </Container>

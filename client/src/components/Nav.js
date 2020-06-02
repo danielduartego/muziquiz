@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { userContext, signOut } from "../utils/auth";
+import { userContext, signOut } from "../hooks/auth";
 import styled from "styled-components/macro";
 import LogoIcon from "./icons/logo.js";
 import { theme } from "../styles";

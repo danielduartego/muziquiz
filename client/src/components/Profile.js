@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import styled from "styled-components/macro";
 import IconUser from "./icons/user.js";
 import Loading from "./icons/loading.js";
-import { userContext } from "../utils/auth";
+import { userContext } from "../hooks/auth";
 import { theme, mixins, Main, media, Button } from "../styles";
 const { colors, fontSizes, spacing } = theme;
 
@@ -67,23 +67,23 @@ const StartButton = styled(Button)`
 export class Profile extends Component {
   static contextType = userContext;
   render() {
-    const { user, points } = this.context;
+    const { user } = this.context;
     return (
       <Container>
         {user ? (
           <Fragment>
             <Avatar>
-              {user ? (
-                <img src={user.photoURL} alt="avatar" />
+              {user.userPhoto ? (
+                <img src={user.userPhoto} alt="avatar" />
               ) : (
                 <NoAvatar>
                   <IconUser />
                 </NoAvatar>
               )}
             </Avatar>
-            <Name>{user.displayName}</Name>
+            <Name>{user.userName}</Name>
             <PointsContainer>
-              <h1>{points}</h1>
+              <h1>{user.userPoints}</h1>
               <h6>Points</h6>
             </PointsContainer>
             <StartButton href="/player">Let's Play</StartButton>

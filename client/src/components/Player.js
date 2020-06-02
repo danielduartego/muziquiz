@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { userContext } from "../utils/auth";
+import { userContext } from "../hooks/auth";
 import MusicWave from "./icons/musicWave.js";
 import ArrowUp from "../styles/ArrowUp";
 import ArrowDown from "../styles/ArrowDown";
@@ -138,17 +138,17 @@ export class Player extends Component {
       showCountdown: false,
       showArrows: false,
       showArroUp: Boolean,
-      userPoints: null,
+      userPoints: 0,
       showCover: false,
     };
   }
 
   componentDidMount() {
-    const { points } = this.context;
-    this.setState({
-      userPoints: points,
-    });
-    console.log("mounted");
+    // const { points } = this.context;
+    // this.setState({
+    //   userPoints: points,
+    // });
+    // console.log("mounted");
     this.getData();
   }
 
