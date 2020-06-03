@@ -4,7 +4,6 @@ import axios from "axios";
 
 export const userContext = createContext({
   user: null,
-  loading: false,
 });
 
 export const useSession = () => {
@@ -14,14 +13,11 @@ export const useSession = () => {
 
 export const useAuth = () => {
   const [state, setState] = useState(() => {
-    console.log("useState");
-
     const user = firebase.auth().currentUser;
     return { user };
   });
 
   const onChange = (user) => {
-    console.log("onChange");
     if (user) {
       axios
         .get(
@@ -30,15 +26,29 @@ export const useAuth = () => {
         .then((res) => {
           setState({ user: res.data });
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          // Get user details while firebase function create user details
+          // Only run on first time login when create a user
+          if (err.response.status === 404) {
+            setState({
+              user: {
+                userId: user.uid,
+                userName: user.displayName,
+                userEmail: user.email,
+                userPhoto: user.photoURL,
+                userPoints: 0,
+              },
+            });
+          } else {
+            console.log(err);
+          }
+        });
     }
   };
 
   useEffect(() => {
-    console.log("useEffect");
     // listen for auth state changes
     const unsubscribe = firebase.auth().onAuthStateChanged(onChange);
-    // unsubscribe to the listener when unmounting
     return () => unsubscribe();
   }, []);
 

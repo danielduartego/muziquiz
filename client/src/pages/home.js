@@ -1,7 +1,8 @@
-import React, { Component, Fragment } from "react";
+import React, { Component, Fragment, useSession } from "react";
 import { Switch, Route } from "react-router-dom";
 import Loading from "../components/icons/loading.js";
-
+import axios from "axios";
+import firebase from "firebase";
 import { userContext } from "../hooks/auth";
 import Profile from "../components/Profile";
 import Player from "../components/Player";
@@ -22,10 +23,6 @@ export class home extends Component {
   state = {
     dataTracks: [],
   };
-
-  componentDidMount() {
-    // this.getData();
-  }
 
   async getData() {
     const dataTracks = await getDataTracks();

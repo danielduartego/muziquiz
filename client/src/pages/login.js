@@ -26,133 +26,77 @@ const ButtonContainer = styled.div`
   display: contents;
 `;
 
-const LoginButton = styled(Button)`
+const GoogleLoginButton = styled(Button)`
   width: 100%;
-  background-color: ${colors.green};
+  background-color: ${colors.white};
+  color: ${colors.grey};
+  text-transform: inherit;
+  margin: 10px 0;
+  img {
+    border: none;
+    display: inline-block;
+    vertical-align: middle;
+    height: 18px;
+    width: 18px;
+  }
+  span {
+    padding-left: 10px;
+    letter-spacing: 0px;
+  }
+`;
+
+const FacebookLoginButton = styled(Button)`
+  width: 100%;
+  background-color: #3b5998;
   color: ${colors.white};
-  &:hover {
-    background-color: ${colors.offGreen};
+  text-transform: inherit;
+  margin: 10px 0;
+  img {
+    border: none;
+    display: inline-block;
+    vertical-align: middle;
+    height: 18px;
+    width: 18px;
+  }
+  span {
+    padding-left: 10px;
+    letter-spacing: 0px;
   }
 `;
 
 // Firebase Initialization
 firebase.initializeApp({
-  // apiKey: process.env.API_KEY,
-  // authDomain: process.env.AUTH_DOMAIN,
   apiKey: "AIzaSyDSQkZzRRA85gH5dsbe_NkLC8a6hl0fQf0",
   authDomain: "muziquiz-app.firebaseapp.com",
 });
 
 export class login extends Component {
-  static contextType = userContext;
-
-  state = {
-    loading: false,
-  };
-
   uiConfig = {
     signInFlow: "popup",
+    signInSuccessUrl: "/",
     signInOptions: [
       firebase.auth.GoogleAuthProvider.PROVIDER_ID,
       firebase.auth.FacebookAuthProvider.PROVIDER_ID,
       firebase.auth.EmailAuthProvider.PROVIDER_ID,
     ],
   };
-
-  loginWithFacebook = () => {
-    this.setState({ loading: true });
-    let facebookProvider = new firebase.auth.FacebookAuthProvider();
-
-    firebase
-      .auth()
-      .signInWithPopup(facebookProvider)
-      .then(function (result) {
-        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-        let token = result.credential.accessToken;
-        // The signed-in user info.
-        let user = result.user;
-        // ...
-        console.log(token, user);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
-  loginWithGoogle = () => {
-    this.setState({ loading: true });
-    let googleProvider = new firebase.auth.GoogleAuthProvider();
-    firebase
-      .auth()
-      .signInWithPopup(googleProvider)
-      .then(function (result) {
-        console.log(result);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
-  createUser = () => {
-    this.setState({ loading: true });
-    const email = "dan@user.com";
-    const password = "123456";
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(function (user) {
-        window.location = window.location.origin;
-      })
-      .catch(function (error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-      });
-  };
-  signInUser = () => {
-    this.setState({ loading: true });
-    const email = "joeh@doe.com";
-    const password = "123456";
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .catch(function (error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-      });
-  };
-
   render() {
-    const { loading } = this.state;
-
     return (
       <Container>
-        {loading ? (
-          <Loading />
-        ) : (
-          <div>
-            <h1>
-              Hello,{" "}
-              <span role="img" aria-label="hello">
-                👋
-              </span>
-            </h1>
-            <h1>Welcome to Muziquiz</h1>
-            <h6>Before we start, let’s first login.</h6>
-            <StyledFirebaseAuth
-              uiConfig={this.uiConfig}
-              firebaseAuth={firebase.auth()}
-            />
-
-            <button onClick={this.loginWithFacebook}>
-              Login with facebook
-            </button>
-            <button onClick={this.loginWithGoogle}>Login with google</button>
-            <button onClick={this.createUser}>create user</button>
-            <button onClick={this.signInUser}>sign in user john doe</button>
-          </div>
-        )}
+        <div>
+          <h1>
+            Hello,{" "}
+            <span role="img" aria-label="hello">
+              👋
+            </span>
+          </h1>
+          <h1>Welcome to Muziquiz</h1>
+          <h6>Before we start, let’s first login.</h6>
+          <StyledFirebaseAuth
+            uiConfig={this.uiConfig}
+            firebaseAuth={firebase.auth()}
+          />
+        </div>
       </Container>
     );
   }

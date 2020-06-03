@@ -13,10 +13,7 @@ const Button = styled.a`
   text-transform: uppercase;
   text-align: center;
   font-size: ${fontSizes.sm};
-  width: 380px;
-  ${media.phablet`
-        width: 300px;
-    `};
+  width: 100%;
 `;
 
 export default Button;
