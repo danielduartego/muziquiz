@@ -21,9 +21,6 @@ const LogoutButton = styled.button`
   padding: 0;
   font-weight: 400;
   font-size: ${fontSizes.sm};
-  &:hover {
-    color: ${colors.white};
-  }
 `;
 
 export class Nav extends Component {

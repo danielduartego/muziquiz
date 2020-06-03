@@ -58,10 +58,6 @@ const PointsContainer = styled.div`
 const StartButton = styled(Button)`
   border: 2px solid ${colors.white};
   color: ${colors.white};
-  &:hover {
-    color: ${colors.black};
-    background-color: ${colors.white};
-  }
 `;
 
 export class Profile extends Component {

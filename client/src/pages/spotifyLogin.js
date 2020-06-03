@@ -30,9 +30,6 @@ const LoginButton = styled(Button)`
   width: 100%;
   background-color: ${colors.green};
   color: ${colors.white};
-  &:hover {
-    background-color: ${colors.offGreen};
-  }
 `;
 
 export class spotifyLogin extends Component {

@@ -50,8 +50,8 @@ const StatusContainer = styled.div`
 const ActionContainer = styled.div`
   ${mixins.flexCenter};
   flex-direction: column;
-  height: 400px;
-  width: 400px;
+  min-height: 300px;
+  width: 100%;
 `;
 
 const PlayingContainer = styled.div`
@@ -82,10 +82,6 @@ const AnswerButton = styled(Button)`
   margin: 10px 0;
   border: 2px solid ${colors.white};
   color: ${colors.white};
-  &:hover {
-    color: ${colors.black};
-    background-color: ${colors.white};
-  }
 `;
 
 const Artwork = styled.div`

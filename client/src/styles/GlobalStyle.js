@@ -172,11 +172,6 @@ const GlobalStyle = createGlobalStyle`
     padding: 10px 20px;
     cursor: pointer;
     transition: ${theme.transition};
-
-    &:hover {
-      color: ${colors.white};
-      outline: 0;
-    }
   }
 
   #firebaseui_container{
